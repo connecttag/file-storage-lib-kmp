@@ -1,5 +1,7 @@
 ﻿package org.connecttag.lib.filestorage
 
+import kotlinx.serialization.Serializable
+
 data class FileFetchRequest(
     val id: FileResourceId,
     val url: String,
@@ -31,6 +33,7 @@ data class FileWriteRequest(
     val attributes: Map<String, String> = emptyMap(),
 )
 
+@Serializable
 data class FileResourceMetadata(
     val id: FileResourceId,
     val sizeBytes: Long,

@@ -1,5 +1,8 @@
 ﻿package org.connecttag.lib.filestorage
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class FileResourceId(
     val namespace: String,
     val key: String,

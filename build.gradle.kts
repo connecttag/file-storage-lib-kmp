@@ -19,6 +19,7 @@ val pVersion = project.findProperty("version")?.toString()?.takeIf { it.isNotBla
 version = pVersion
 
 kotlin {
+    compilerOptions { optIn.add("kotlin.js.ExperimentalWasmJsInterop") }
     android {
         namespace = "org.connecttag.lib.filestorage"
         compileSdk = 37
@@ -44,7 +45,15 @@ kotlin {
         }
     }
 
+    @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
+    wasmJs { browser() }
+
+    applyDefaultHierarchyTemplate()
     sourceSets {
+        val nonWebMain by creating { dependsOn(commonMain.get()) }
+        androidMain.get().dependsOn(nonWebMain)
+        jvmMain.get().dependsOn(nonWebMain)
+        iosMain.get().dependsOn(nonWebMain)
         commonMain.dependencies {
             api(libs.okio)
             implementation(libs.kotlinx.coroutines.core)
